@@ -1,0 +1,58 @@
+<!-- <div class="todo-container">
+    <h2>My To-Do List</h2>
+  
+    <mat-form-field appearance="fill">
+      <mat-label>Due Date</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="newTodoDate" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  
+    <input [(ngModel)]="newTodoTitle" placeholder="Add a task..." />
+    <button (click)="addTodo()">Add</button>
+  
+    <ul>
+      <li *ngFor="let todo of todos">
+        <input type="checkbox" [checked]="todo.completed" (change)="toggleTodo(todo.id)" />
+        <span [ngClass]="{ completed: todo.completed }">{{ todo.title }}</span>
+        <span *ngIf="todo.dueDate"> (Due: {{ todo.dueDate | date:'shortDate' }}) </span>
+        <button (click)="deleteTodo(todo.id)">Delete</button>
+      </li>
+    </ul>
+  </div> -->
+  
+
+  <form class="todo-form" (ngSubmit)="addTodo()">
+    <mat-form-field appearance="fill" class="todo-title-field">
+      <mat-label>Task</mat-label>
+      <input matInput [(ngModel)]="newTodoTitle" name="title" required />
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill" class="todo-date-field">
+      <mat-label>Due Date</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="newTodoDate" name="dueDate" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  
+    <button mat-raised-button color="primary" type="submit" [disabled]="!newTodoTitle.trim()">
+      Add Task
+    </button>      
+  </form>
+
+  <mat-list>
+    <mat-list-item *ngFor="let todo of todos">
+      <mat-checkbox [checked]="todo.completed" (change)="toggleTodo(todo.id)"></mat-checkbox>
+  
+      <div class="todo-content" [ngClass]="{ completed: todo.completed }">
+        {{ todo.title }}
+        <small *ngIf="todo.dueDate" class="due-date">
+          (Due: {{ todo.dueDate | date: 'shortDate' }})
+        </small>
+      </div>
+  
+      <button mat-icon-button color="warn" (click)="deleteTodo(todo.id)" aria-label="Delete task">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>

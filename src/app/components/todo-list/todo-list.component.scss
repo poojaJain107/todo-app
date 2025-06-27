@@ -1,0 +1,43 @@
+.todo-form {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .todo-title-field {
+    flex: 2;
+    min-width: 180px;
+  }
+  
+  .todo-date-field {
+    flex: 1;
+    min-width: 130px;
+  }
+  
+  button {
+    height: 36px;
+  }
+
+  .todo-content {
+    flex: 1;
+    margin-left: 16px;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .completed {
+    text-decoration: line-through;
+    color: gray;
+  }
+  
+  .due-date {
+    font-size: 12px;
+    color: #666;
+    margin-left: 10px;
+  }
+  
+  
