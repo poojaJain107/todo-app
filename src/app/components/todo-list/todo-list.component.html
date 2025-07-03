@@ -42,17 +42,19 @@
 
   <mat-list>
     <mat-list-item *ngFor="let todo of todos">
-      <mat-checkbox [checked]="todo.completed" (change)="toggleTodo(todo.id)"></mat-checkbox>
+      <div style="display: flex;">
+      <mat-checkbox [checked]="todo.completed" (change)="toggleTodo($event, todo.id)"></mat-checkbox>
   
       <div class="todo-content" [ngClass]="{ completed: todo.completed }">
         {{ todo.title }}
         <small *ngIf="todo.dueDate" class="due-date">
-          (Due: {{ todo.dueDate | date: 'shortDate' }})
+          (Due: {{ todo.dueDate | date: 'dd/MM/yyyy' }})
         </small>
       </div>
   
       <button mat-icon-button color="warn" (click)="deleteTodo(todo.id)" aria-label="Delete task">
         <mat-icon>delete</mat-icon>
       </button>
+    </div>
     </mat-list-item>
   </mat-list>

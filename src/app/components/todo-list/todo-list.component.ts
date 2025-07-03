@@ -10,7 +10,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
-
+import { Timestamp } from 'firebase/firestore';
 @Component({
   selector: 'app-todo-list',
   standalone: true,
@@ -30,22 +30,35 @@ export class TodoListComponent {
   constructor(private todoService: TodoService) {}
 
   ngOnInit() {
-    this.todos = this.todoService.getTodos();
+    this.todoService.getTodos().subscribe((res:any) => {
+      this.todos = res
+      this.todos.forEach((res:any)=>{
+        res.dueDate = res?.dueDate.toDate()
+      })
+      console.log(this.todos)
+
+    });
   }
 
   addTodo() {
     if (this.newTodoTitle.trim()) {
-      this.todoService.addTodo(this.newTodoTitle, this.newTodoDate || undefined);
+      let obj: ToDo = {
+        id: '',
+        title: this.newTodoTitle,
+        dueDate: new Date(this.newTodoDate ? this.newTodoDate.getTime() : Date.now()),
+        completed: false
+      }
+      this.todoService.addTodo(obj);
       this.newTodoTitle = '';
       this.newTodoDate = null;
     }
   }
 
-  toggleTodo(id: number) {
-    this.todoService.toggleTodo(id);
+  toggleTodo(event:any, id: string) {
+    this.todoService.toggleTodo(event.checked, id);
   }
 
-  deleteTodo(id: number) {
+  deleteTodo(id: string) {
     this.todoService.deleteTodo(id);
   }
 }
